@@ -95,10 +95,9 @@ All scripts load credentials via `python-dotenv`.
 
 | Label | Properties | Source |
 |---|---|---|
-| `Patient` | `person_id`, `year_of_birth`, `year_of_birth_band`, `gender`, `race` | person.csv |
+| `Patient` | `person_id`, `year_of_birth`, `year_of_birth_band`, `gender`, `race`, `visit_count` | person.csv + visit_occurrence.csv |
 | `Condition` | `condition_concept_id`, `condition_name` | condition_occurrence.csv |
 | `Drug` | `drug_concept_id`, `drug_name` | drug_exposure.csv |
-| `Visit` | `visit_occurrence_id`, `visit_start_date`, `visit_type` | visit_occurrence.csv |
 
 > **Note on concept names:** Synthea-generated OMOP CSVs include
 > `condition_source_value` (human-readable condition name) in
@@ -114,14 +113,12 @@ All scripts load credentials via `python-dotenv`.
 |---|---|---|
 | `HAS_CONDITION` | Patient → Condition | `condition_start_date` |
 | `PRESCRIBED` | Patient → Drug | `drug_exposure_start_date` |
-| `HAD_VISIT` | Patient → Visit | — |
 
 ### Constraints and indexes
 
 - Unique constraint on `Patient.person_id`
 - Unique constraint on `Condition.condition_concept_id`
 - Unique constraint on `Drug.drug_concept_id`
-- Unique constraint on `Visit.visit_occurrence_id`
 - Index on `Patient.year_of_birth_band`
 
 ## Expected graph statistics
@@ -136,7 +133,6 @@ Exact numbers confirmed from Block 1/2 source data:
 | Drug nodes | ~300 distinct drugs |
 | HAS_CONDITION relationships | distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv |
 | PRESCRIBED relationships | distinct (person_id, drug_concept_id, drug_exposure_start_date) tuples in drug_exposure.csv |
-| HAD_VISIT relationships | ~20,000 (matches visit_occurrence.csv rows) |
 | Export records (JSONL) | matches Patient node count |
 
 > **Note:** Exact counts must be confirmed by running `wc -l` on each CSV before
@@ -179,9 +175,9 @@ LIMIT 10
 
 **Q4 — Patients with the most visits**
 ```cypher
-MATCH (p:Patient)-[:HAD_VISIT]->(v:Visit)
+MATCH (p:Patient)
 RETURN p.person_id AS patient_id,
-       count(v) AS visit_count
+       p.visit_count AS visit_count
 ORDER BY visit_count DESC
 LIMIT 10
 ```
@@ -200,7 +196,8 @@ as JSON Lines (one record per patient). Example record:
     "year_of_birth_band": "1970s",
     "gender": "M",
     "condition_count": 2,
-    "drug_count": 2
+    "drug_count": 2,
+    "visit_count": 3
   }
 }
 ```
@@ -248,7 +245,7 @@ Block 3 must:
    - Drug node count matches distinct drug_concept_id count in drug_exposure.csv
    - HAS_CONDITION relationship count matches distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv
    - PRESCRIBED relationship count matches distinct (person_id, drug_concept_id, drug_exposure_start_date) tuples in drug_exposure.csv
-   - HAD_VISIT relationship count matches visit_occurrence.csv row count
+   - Patient.visit_count matches visit_occurrence.csv row count per person_id
    - `data/export/graph_export.jsonl` exists and record count matches Patient node count
 
 ## Success criteria
