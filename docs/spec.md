@@ -134,8 +134,8 @@ Exact numbers confirmed from Block 1/2 source data:
 | Patient nodes | ~1,000 (matches person.csv row count) |
 | Condition nodes | ~400 distinct conditions |
 | Drug nodes | ~300 distinct drugs |
-| HAS_CONDITION relationships | ~14,000 (matches condition_occurrence.csv rows) |
-| PRESCRIBED relationships | ~11,000 (matches drug_exposure.csv rows) |
+| HAS_CONDITION relationships | distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv |
+| PRESCRIBED relationships | distinct (person_id, drug_concept_id, drug_exposure_start_date) tuples in drug_exposure.csv |
 | HAD_VISIT relationships | ~20,000 (matches visit_occurrence.csv rows) |
 | Export records (JSONL) | matches Patient node count |
 
@@ -246,8 +246,8 @@ Block 3 must:
    - Patient node count matches person.csv row count
    - Condition node count matches distinct condition_concept_id count in condition_occurrence.csv
    - Drug node count matches distinct drug_concept_id count in drug_exposure.csv
-   - HAS_CONDITION relationship count matches condition_occurrence.csv row count
-   - PRESCRIBED relationship count matches drug_exposure.csv row count
+   - HAS_CONDITION relationship count matches distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv
+   - PRESCRIBED relationship count matches distinct (person_id, drug_concept_id, drug_exposure_start_date) tuples in drug_exposure.csv
    - HAD_VISIT relationship count matches visit_occurrence.csv row count
    - `data/export/graph_export.jsonl` exists and record count matches Patient node count
 
