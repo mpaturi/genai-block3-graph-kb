@@ -202,6 +202,11 @@ as JSON Lines (one record per patient). Example record:
 }
 ```
 
+> **Note on text length:** High-burden patients (many conditions + drugs) may produce
+> long `text` strings. Chunking is intentionally deferred to Block 4, where the RAG
+> pipeline will split records before embedding. Block 3 exports full patient summaries
+> without truncation.
+
 The `text` field gets embedded by Block 4; `metadata` enables filtered retrieval
 in Pinecone.
 
