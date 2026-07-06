@@ -5,8 +5,8 @@
 - [x] Write `docs/spec.md`
 - [x] Write `docs/plan.md`
 - [x] Write `docs/tasks.md`
-- [ ] Commit `docs/spec.md`, `docs/plan.md`, `docs/tasks.md`, `docs/schema.svg` to branch `phase-1-spec`
-- [ ] Push `phase-1-spec` to GitHub and open PR1 (spec review)
+- [x] Commit `docs/spec.md`, `docs/plan.md`, `docs/tasks.md`, `docs/schema.svg` to branch `phase-1-spec`
+- [x] Push `phase-1-spec` to GitHub and open PR1 (spec review)
 
 ## Phase 2 — Setup (`phase-2-setup`)
 
