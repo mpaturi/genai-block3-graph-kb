@@ -1,0 +1,67 @@
+<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" role="img" font-family="system-ui, sans-serif">
+  <title>Block 3 Graph Schema</title>
+  <desc>Neo4j graph schema showing Patient node connected to Condition and Drug nodes via labeled relationships</desc>
+
+  <!-- Arrowhead markers -->
+  <defs>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+    <marker id="arrowYellow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#d29922"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="340" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="350" y="36" text-anchor="middle" font-size="15" font-weight="600" fill="#e6edf3">OMOP Clinical Graph Schema</text>
+
+  <!-- Patient node (left-center) -->
+  <g transform="translate(185, 175)">
+    <rect x="-75" y="-38" width="150" height="76" rx="32" fill="#1f6feb" opacity="0.15" stroke="#1f6feb" stroke-width="2"/>
+    <text x="0" y="-16" text-anchor="middle" font-size="11" font-weight="700" fill="#58a6ff">Patient</text>
+    <text x="0" y="0" text-anchor="middle" font-size="9.5" fill="#8b949e">person_id · visit_count</text>
+    <text x="0" y="14" text-anchor="middle" font-size="9.5" fill="#8b949e">year_of_birth_band · gender · race</text>
+  </g>
+
+  <!-- Condition node (top right) -->
+  <g transform="translate(530, 95)">
+    <rect x="-72" y="-32" width="144" height="64" rx="10" fill="#238636" opacity="0.15" stroke="#238636" stroke-width="2"/>
+    <text x="0" y="-8" text-anchor="middle" font-size="11" font-weight="700" fill="#3fb950">Condition</text>
+    <text x="0" y="8" text-anchor="middle" font-size="9.5" fill="#8b949e">condition_concept_id</text>
+    <text x="0" y="20" text-anchor="middle" font-size="9.5" fill="#8b949e">condition_name</text>
+  </g>
+
+  <!-- Drug node (bottom right) -->
+  <g transform="translate(530, 255)">
+    <rect x="-72" y="-32" width="144" height="64" rx="10" fill="#9e6a03" opacity="0.15" stroke="#d29922" stroke-width="2"/>
+    <text x="0" y="-8" text-anchor="middle" font-size="11" font-weight="700" fill="#d29922">Drug</text>
+    <text x="0" y="8" text-anchor="middle" font-size="9.5" fill="#8b949e">drug_concept_id</text>
+    <text x="0" y="20" text-anchor="middle" font-size="9.5" fill="#8b949e">drug_name</text>
+  </g>
+
+  <!-- Arrow: Patient → Condition -->
+  <line x1="260" y1="158" x2="458" y2="103" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <rect x="298" y="108" width="124" height="18" rx="4" fill="#0d1117" opacity="0.85"/>
+  <text x="360" y="121" text-anchor="middle" font-size="9.5" font-weight="600" fill="#3fb950">HAS_CONDITION</text>
+  <text x="360" y="134" text-anchor="middle" font-size="8.5" fill="#8b949e">condition_start_date</text>
+
+  <!-- Arrow: Patient → Drug -->
+  <line x1="260" y1="192" x2="458" y2="247" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrowYellow)"/>
+  <rect x="306" y="212" width="104" height="18" rx="4" fill="#0d1117" opacity="0.85"/>
+  <text x="358" y="225" text-anchor="middle" font-size="9.5" font-weight="600" fill="#d29922">PRESCRIBED</text>
+  <text x="358" y="238" text-anchor="middle" font-size="8.5" fill="#8b949e">drug_exposure_start_date</text>
+
+  <!-- Legend -->
+  <g transform="translate(24, 306)">
+    <rect x="0" y="-14" width="8" height="8" rx="2" fill="#58a6ff" opacity="0.6"/>
+    <text x="13" y="-6" font-size="9" fill="#8b949e">Patient (core entity)</text>
+    <rect x="140" y="-14" width="8" height="8" rx="2" fill="#3fb950" opacity="0.6"/>
+    <text x="153" y="-6" font-size="9" fill="#8b949e">Condition</text>
+    <rect x="240" y="-14" width="8" height="8" rx="2" fill="#d29922" opacity="0.6"/>
+    <text x="253" y="-6" font-size="9" fill="#8b949e">Drug</text>
+    <text x="0" y="14" font-size="8.5" fill="#8b949e">Arrows show directed relationships · Properties shown in grey</text>
+  </g>
+</svg>
