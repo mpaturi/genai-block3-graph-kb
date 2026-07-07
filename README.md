@@ -10,6 +10,10 @@ subgraphs as JSONL for Block 4 RAG ingestion (Pinecone).
 
 ![Schema diagram](docs/schema.svg)
 
+## Architecture
+
+![Architecture diagram](docs/architecture.svg)
+
 | Node | Key properties |
 |---|---|
 | `Patient` | `person_id`, `year_of_birth_band`, `gender`, `race`, `visit_count` |
