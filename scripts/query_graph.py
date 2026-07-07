@@ -51,13 +51,15 @@ QUERIES = {
 
 def main():
     driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
-    with driver.session(database=DATABASE) as session:
-        for title, cypher in QUERIES.items():
-            print(f"\n=== {title} ===")
-            result = session.run(cypher)
-            df = pd.DataFrame([r.data() for r in result])
-            print(df.to_string(index=False))
-    driver.close()
+    try:
+        with driver.session(database=DATABASE) as session:
+            for title, cypher in QUERIES.items():
+                print(f"\n=== {title} ===")
+                result = session.run(cypher)
+                df = pd.DataFrame([r.data() for r in result])
+                print(df.to_string(index=False))
+    finally:
+        driver.close()
 
 
 if __name__ == "__main__":

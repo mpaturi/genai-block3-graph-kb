@@ -43,9 +43,11 @@ def build_text(row):
 
 def main():
     driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
-    with driver.session(database=DATABASE) as session:
-        records = list(session.run(EXPORT_QUERY))
-    driver.close()
+    try:
+        with driver.session(database=DATABASE) as session:
+            records = list(session.run(EXPORT_QUERY))
+    finally:
+        driver.close()
 
     with open(EXPORT_PATH, "wb") as f:
         for record in tqdm(records, desc="Exporting"):
