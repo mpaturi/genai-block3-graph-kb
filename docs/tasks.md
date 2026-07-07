@@ -36,7 +36,7 @@
 - [ ] Run queries — confirm 4 result tables with non-empty rows
 - [ ] Create `data/export/.gitkeep`
 - [ ] Create `scripts/export_graph.py`
-- [ ] Run exporter — confirm ~1,000 records in `data/export/graph_export.jsonl`
+- [ ] Run exporter — confirm ~11,770 records in `data/export/graph_export.jsonl`
 - [ ] Spot-check JSONL output (valid JSON, readable `text` field)
 - [ ] Commit `scripts/query_graph.py`, `scripts/export_graph.py`, `data/export/.gitkeep`
 

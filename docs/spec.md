@@ -128,15 +128,14 @@ Exact numbers confirmed from Block 1/2 source data:
 
 | Metric | Expected |
 |---|---|
-| Patient nodes | ~1,000 (matches person.csv row count) |
-| Condition nodes | ~400 distinct conditions |
-| Drug nodes | ~300 distinct drugs |
-| HAS_CONDITION relationships | distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv |
-| PRESCRIBED relationships | distinct (person_id, drug_concept_id, drug_exposure_start_date) tuples in drug_exposure.csv |
-| Export records (JSONL) | matches Patient node count |
+| Patient nodes | 11,424 (person.csv 11,770 minus 176 null year_of_birth rows) |
+| Condition nodes | 3 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia) |
+| Drug nodes | 6 (Metformin, Humulin insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin) |
+| HAS_CONDITION relationships | 4,818 (distinct person_id, condition_concept_id, condition_start_date tuples) |
+| PRESCRIBED relationships | 4,323 (distinct person_id, drug_concept_id, drug_exposure_start_date tuples) |
+| Export records (JSONL) | 11,424 (matches Patient node count) |
 
-> **Note:** Exact counts must be confirmed by running `wc -l` on each CSV before
-> Phase 3. Update this table with actual numbers at that time.
+> **Actual CSV row counts (confirmed Phase 3):** person.csv 11,770 · condition_occurrence.csv 5,037 · drug_exposure.csv 4,564 · visit_occurrence.csv 23,541
 
 ## Cypher queries
 
@@ -190,11 +189,11 @@ as JSON Lines (one record per patient). Example record:
 ```json
 {
   "id": "patient_123",
-  "text": "Patient 123, born in the 1970s, male. Conditions: Type 2 diabetes mellitus, Essential hypertension. Drugs: Metformin, Lisinopril. Visits: 3.",
+  "text": "Patient 123, born in the 1970s, Male. Conditions: Type 2 diabetes mellitus, Essential hypertension. Drugs: Metformin, Lisinopril. Visits: 3.",
   "metadata": {
     "person_id": 123,
     "year_of_birth_band": "1970s",
-    "gender": "M",
+    "gender": "Male",
     "condition_count": 2,
     "drug_count": 2,
     "visit_count": 3
