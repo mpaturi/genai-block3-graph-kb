@@ -141,7 +141,7 @@
 
 - [ ] Create `data/export/.gitkeep`
 - [ ] Create `scripts/export_graph.py`
-- [ ] Run — confirm `Exported ~1000 records to data/export/graph_export.jsonl`
+- [ ] Run — confirm `Exported ~11,424 records to data/export/graph_export.jsonl`
 - [ ] Spot-check first record: `id`, `text`, `metadata` keys present; `text` is readable
 - [ ] Commit: `feat(export): add JSONL patient subgraph exporter`
 

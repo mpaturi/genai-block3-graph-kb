@@ -99,13 +99,10 @@ All scripts load credentials via `python-dotenv`.
 | `Condition` | `condition_concept_id`, `condition_name` | condition_occurrence.csv |
 | `Drug` | `drug_concept_id`, `drug_name` | drug_exposure.csv |
 
-> **Note on concept names:** Synthea-generated OMOP CSVs include
-> `condition_source_value` (human-readable condition name) in
-> condition_occurrence.csv and `drug_source_value` (drug name) in
-> drug_exposure.csv. These are used as `condition_name` and `drug_name`
-> on nodes. If these fields are empty in the actual CSVs, fall back to
-> `condition_concept_id` and `drug_concept_id` as the display value.
-> Verify before Phase 3 begins.
+> **Note on concept names:** These CSVs do not include `condition_source_value` or
+> `drug_source_value` columns. Condition and drug names are mapped from
+> `condition_concept_id` and `drug_concept_id` using a hardcoded dictionary
+> sourced from Block 1's `src/concepts.py`.
 
 ### Relationships
 
