@@ -46,5 +46,5 @@
 - [x] Run `python scripts/verify.py` — all checks PASS
 - [x] Run `python scripts/run_all.py` — all steps complete
 - [x] Write `README.md` (setup steps + schema diagram)
-- [ ] Commit `scripts/run_all.py`, `scripts/verify.py`, `README.md`
-- [ ] Push `phase-5-verify` to GitHub — PR2 ready for mentor review
+- [x] Commit `scripts/run_all.py`, `scripts/verify.py`, `README.md`
+- [x] Push `phase-5-verify` to GitHub — PR2 ready for mentor review
