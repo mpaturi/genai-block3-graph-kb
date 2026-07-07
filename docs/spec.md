@@ -125,7 +125,7 @@ Exact numbers confirmed from Block 1/2 source data:
 
 | Metric | Expected |
 |---|---|
-| Patient nodes | 11,424 (person.csv 11,770 minus 176 null year_of_birth rows) |
+| Patient nodes | 11,424 (person.csv 11,770 minus 346 null year_of_birth rows) |
 | Condition nodes | 3 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia) |
 | Drug nodes | 6 (Metformin, Humulin insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin) |
 | HAS_CONDITION relationships | 4,818 (distinct person_id, condition_concept_id, condition_start_date tuples) |
@@ -241,7 +241,7 @@ Block 3 must:
 8. All scripts runnable from a single command (`python scripts/run_all.py`).
 9. Verification script (`scripts/verify.py`) must confirm:
    - Neo4j is reachable
-   - Patient node count matches person.csv row count
+   - Patient node count matches person.csv row count after dropping rows with null year_of_birth (11,424)
    - Condition node count matches distinct condition_concept_id count in condition_occurrence.csv
    - Drug node count matches distinct drug_concept_id count in drug_exposure.csv
    - HAS_CONDITION relationship count matches distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv

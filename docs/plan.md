@@ -97,7 +97,6 @@
 
 - [ ] Copy OMOP CSVs into `data/raw/` from Block 1
 - [ ] Run `wc -l data/raw/*.csv` — update Expected Graph Statistics in `docs/spec.md`
-- [ ] Verify `condition_source_value` / `drug_source_value` are populated
 - [ ] Create `scripts/load_graph.py`
 - [ ] Run loader — confirm progress bars complete with `Graph load complete.`
 - [ ] Re-run — confirm identical counts (idempotency)

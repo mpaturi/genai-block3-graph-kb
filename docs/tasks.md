@@ -22,13 +22,12 @@
 
 ## Phase 3 — Load (`phase-3-load`)
 
-- [ ] Copy OMOP CSVs into `data/raw/` (person, condition_occurrence, drug_exposure, visit_occurrence)
-- [ ] Record actual row counts; update Expected Graph Statistics in `docs/spec.md`
-- [ ] Verify `condition_source_value` / `drug_source_value` are populated
-- [ ] Create `scripts/load_graph.py`
-- [ ] Run loader — confirm progress bars complete
-- [ ] Re-run loader — confirm idempotency (same counts)
-- [ ] Commit `scripts/load_graph.py` and `data/raw/*.csv` to branch `phase-3-load`
+- [x] Copy OMOP CSVs into `data/raw/` (person, condition_occurrence, drug_exposure, visit_occurrence)
+- [x] Record actual row counts; update Expected Graph Statistics in `docs/spec.md`
+- [x] Create `scripts/load_graph.py`
+- [x] Run loader — confirm progress bars complete
+- [x] Re-run loader — confirm idempotency (same counts)
+- [x] Commit `scripts/load_graph.py` and `data/raw/*.csv` to branch `phase-3-load`
 
 ## Phase 4 — Query + Export (`phase-4-query-export`)
 
