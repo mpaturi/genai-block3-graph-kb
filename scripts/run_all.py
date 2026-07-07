@@ -1,13 +1,16 @@
 import subprocess
 import sys
 
+# Use sys.executable so subprocesses run in the same venv as run_all.py itself.
+PY = sys.executable
+
 # Run all pipeline steps in order. Each script exits 1 on failure — run_all stops immediately.
 STEPS = [
-    ("Pre-flight: connection check", ["python", "scripts/check_connection.py"]),
-    ("Step 1: load graph",           ["python", "scripts/load_graph.py"]),
-    ("Step 2: run queries",          ["python", "scripts/query_graph.py"]),
-    ("Step 3: export JSONL",         ["python", "scripts/export_graph.py"]),
-    ("Step 4: verify counts",        ["python", "scripts/verify.py"]),
+    ("Pre-flight: connection check", [PY, "scripts/check_connection.py"]),
+    ("Step 1: load graph",           [PY, "scripts/load_graph.py"]),
+    ("Step 2: run queries",          [PY, "scripts/query_graph.py"]),
+    ("Step 3: export JSONL",         [PY, "scripts/export_graph.py"]),
+    ("Step 4: verify counts",        [PY, "scripts/verify.py"]),
 ]
 
 

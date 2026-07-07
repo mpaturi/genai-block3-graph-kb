@@ -31,20 +31,20 @@
 
 ## Phase 4 — Query + Export (`phase-4-query-export`)
 
-- [ ] Create `scripts/query_graph.py` (Q1–Q4)
-- [ ] Run queries — confirm 4 result tables with non-empty rows
-- [ ] Create `data/export/.gitkeep`
-- [ ] Create `scripts/export_graph.py`
-- [ ] Run exporter — confirm ~11,424 records in `data/export/graph_export.jsonl`
-- [ ] Spot-check JSONL output (valid JSON, readable `text` field)
-- [ ] Commit `scripts/query_graph.py`, `scripts/export_graph.py`, `data/export/.gitkeep`
+- [x] Create `scripts/query_graph.py` (Q1–Q4)
+- [x] Run queries — confirm 4 result tables with non-empty rows
+- [x] Create `data/export/.gitkeep`
+- [x] Create `scripts/export_graph.py`
+- [x] Run exporter — confirm ~11,424 records in `data/export/graph_export.jsonl`
+- [x] Spot-check JSONL output (valid JSON, readable `text` field)
+- [x] Commit `scripts/query_graph.py`, `scripts/export_graph.py`, `data/export/.gitkeep`
 
 ## Phase 5 — Verify (`phase-5-verify`)
 
-- [ ] Create `scripts/run_all.py`
-- [ ] Create `scripts/verify.py`
-- [ ] Run `python scripts/verify.py` — all checks PASS
-- [ ] Run `python scripts/run_all.py` — all steps complete
-- [ ] Write `README.md` (setup steps + schema diagram)
+- [x] Create `scripts/run_all.py`
+- [x] Create `scripts/verify.py`
+- [x] Run `python scripts/verify.py` — all checks PASS
+- [x] Run `python scripts/run_all.py` — all steps complete
+- [x] Write `README.md` (setup steps + schema diagram)
 - [ ] Commit `scripts/run_all.py`, `scripts/verify.py`, `README.md`
 - [ ] Push `phase-5-verify` to GitHub — PR2 ready for mentor review
