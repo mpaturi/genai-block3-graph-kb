@@ -125,7 +125,7 @@ Exact numbers confirmed from Block 1/2 source data:
 
 | Metric | Expected |
 |---|---|
-| Patient nodes | 11,424 (person.csv 11,770 minus 346 null year_of_birth rows) |
+| Patient nodes | 11,424 (person.csv 11,770 minus 176 null year_of_birth rows minus 170 duplicate person_id rows) |
 | Condition nodes | 3 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia) |
 | Drug nodes | 6 (Metformin, Humulin insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin) |
 | HAS_CONDITION relationships | 4,818 (distinct person_id, condition_concept_id, condition_start_date tuples) |
