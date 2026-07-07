@@ -43,6 +43,8 @@ cp .env.example .env
 
 ## Running
 
+All commands must be run from the project root directory (genai-block3-graph-kb/), not from inside the scripts/ folder.
+
 ```bash
 # Run all steps end-to-end
 python scripts/run_all.py
