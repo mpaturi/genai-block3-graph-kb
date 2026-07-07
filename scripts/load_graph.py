@@ -97,8 +97,8 @@ def load_patients(session):
             "person_id": int(r["person_id"]),
             "year_of_birth": int(r["year_of_birth"]),
             "year_of_birth_band": birth_band(r["year_of_birth"]),
-            "gender": GENDER_NAMES.get(int(r.get("gender_concept_id", 0)), "unknown"),
-            "race": RACE_NAMES.get(int(r.get("race_concept_id", 0)), "unknown"),
+            "gender": GENDER_NAMES.get(int(r.get("gender_concept_id") or 0), "unknown"),
+            "race": RACE_NAMES.get(int(r.get("race_concept_id") or 0), "unknown"),
             "visit_count": int(r["visit_count"]),
         }
         for r in df.to_dict("records")
