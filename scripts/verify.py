@@ -54,17 +54,17 @@ def main():
 
         conditions = pd.read_csv(f"{DATA_DIR}/condition_occurrence.csv")
         conditions = conditions.dropna(subset=["condition_concept_id", "person_id", "condition_start_date"])
+        expected_conditions = conditions["condition_concept_id"].nunique()  # before filter
         # Only count relationships for patients that were actually loaded
         conditions = conditions[conditions["person_id"].isin(valid_pids)]
-        expected_conditions = conditions["condition_concept_id"].nunique()
         expected_has_condition = conditions.drop_duplicates(
             subset=["person_id", "condition_concept_id", "condition_start_date"]
         ).shape[0]
 
         drugs = pd.read_csv(f"{DATA_DIR}/drug_exposure.csv")
         drugs = drugs.dropna(subset=["drug_concept_id", "person_id", "drug_exposure_start_date"])
+        expected_drugs = drugs["drug_concept_id"].nunique()  # before filter
         drugs = drugs[drugs["person_id"].isin(valid_pids)]
-        expected_drugs = drugs["drug_concept_id"].nunique()
         expected_prescribed = drugs.drop_duplicates(
             subset=["person_id", "drug_concept_id", "drug_exposure_start_date"]
         ).shape[0]
