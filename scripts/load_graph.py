@@ -223,13 +223,12 @@ def load_drugs(session):
 
 
 def main():
-    driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
-    with driver.session(database=DATABASE) as session:
-        create_constraints(session)
-        load_patients(session)   # must run before relationships
-        load_conditions(session)
-        load_drugs(session)
-    driver.close()
+    with GraphDatabase.driver(URI, auth=(USER, PASSWORD)) as driver:
+        with driver.session(database=DATABASE) as session:
+            create_constraints(session)
+            load_patients(session)
+            load_conditions(session)
+            load_drugs(session)
     print("Graph load complete.")
 
 
