@@ -122,7 +122,11 @@ def load_patients(session):
 def load_conditions(session):
     """Load Condition nodes (3 distinct) and HAS_CONDITION relationships."""
     df = pd.read_csv(f"{DATA_DIR}/condition_occurrence.csv")
+    before = len(df)
     df = df.dropna(subset=["condition_concept_id", "person_id", "condition_start_date"])
+    dropped = before - len(df)
+    if dropped:
+        print(f"  Skipped {dropped} condition rows with null required fields")
 
     # One Condition node per distinct concept_id — look up name from hardcoded dict
     distinct_ids = df["condition_concept_id"].unique().tolist()
@@ -170,7 +174,11 @@ def load_conditions(session):
 def load_drugs(session):
     """Load Drug nodes (6 distinct) and PRESCRIBED relationships."""
     df = pd.read_csv(f"{DATA_DIR}/drug_exposure.csv")
+    before = len(df)
     df = df.dropna(subset=["drug_concept_id", "person_id", "drug_exposure_start_date"])
+    dropped = before - len(df)
+    if dropped:
+        print(f"  Skipped {dropped} drug rows with null required fields")
 
     # One Drug node per distinct concept_id
     distinct_ids = df["drug_concept_id"].unique().tolist()
