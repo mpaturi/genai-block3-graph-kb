@@ -4,7 +4,7 @@
 
 **Architecture:** Neo4j 5.18 Community runs in a Docker container. Python scripts use the official neo4j driver with `UNWIND`-based batch MERGE for idempotent loading. All scripts read credentials from `.env` via python-dotenv and are orchestrated by `scripts/run_all.py`.
 
-**Tech Stack:** Python 3.11, Neo4j 5.18-community (Docker), neo4j driver ≥5.14.0, pandas ≥2.1.0, python-dotenv ≥1.0.0, orjson ≥3.9.0, tqdm ≥4.66.0
+**Tech Stack:** Python 3.11, Neo4j 5.18-community (Docker), neo4j==6.2.0, pandas==3.0.3, pyarrow==24.0.0, python-dotenv==1.2.2, orjson==3.11.9, tqdm==4.68.3
 
 ## Global Constraints
 

@@ -76,12 +76,12 @@ Orchestration: scripts/run_all.py runs pre-flight + pipeline in sequence.
 |---|---|
 | Neo4j | 5.18 Community + APOC |
 | Python | 3.11 |
-| neo4j (driver) | ≥5.14.0 |
-| pandas | ≥2.1.0 |
-| pyarrow | ≥14.0.0 — pandas CSV backend; also enables Parquet output if needed in Phase 4+ |
-| python-dotenv | ≥1.0.0 |
-| orjson | ≥3.9.0 |
-| tqdm | ≥4.66.0 |
+| neo4j (driver) | 6.2.0 |
+| pandas | 3.0.3 |
+| pyarrow | 24.0.0 |
+| python-dotenv | 1.2.2 |
+| orjson | 3.11.9 |
+| tqdm | 4.68.3 |
 
 ## Credentials and configuration
 
