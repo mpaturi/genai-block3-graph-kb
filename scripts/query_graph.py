@@ -14,7 +14,7 @@ DATABASE = os.environ.get("NEO4J_DATABASE", "neo4j")
 QUERIES = {
     "Q1 — Top 10 most common conditions": """
         MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition)
-        RETURN c.condition_name AS condition, count(p) AS patient_count
+        RETURN c.condition_name AS condition, count(DISTINCT p) AS patient_count
         ORDER BY patient_count DESC
         LIMIT 10
     """,
@@ -23,7 +23,7 @@ QUERIES = {
               (p)-[:PRESCRIBED]->(d:Drug)
         RETURN c.condition_name AS condition,
                d.drug_name AS drug,
-               count(p) AS patient_count
+               count(DISTINCT p) AS patient_count
         ORDER BY patient_count DESC
         LIMIT 20
     """,

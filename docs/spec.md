@@ -139,7 +139,7 @@ Exact numbers confirmed from Block 1/2 source data:
 **Q1 — Top 10 most common conditions**
 ```cypher
 MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition)
-RETURN c.condition_name AS condition, count(p) AS patient_count
+RETURN c.condition_name AS condition, count(DISTINCT p) AS patient_count
 ORDER BY patient_count DESC
 LIMIT 10
 ```
@@ -150,7 +150,7 @@ MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition),
       (p)-[:PRESCRIBED]->(d:Drug)
 RETURN c.condition_name AS condition,
        d.drug_name AS drug,
-       count(p) AS patient_count
+       count(DISTINCT p) AS patient_count
 ORDER BY patient_count DESC
 LIMIT 20
 ```
