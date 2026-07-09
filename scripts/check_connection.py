@@ -17,15 +17,14 @@ def main():
         DATABASE = os.environ.get("NEO4J_DATABASE", "neo4j")
 
         # Open a driver connection using the Bolt protocol
-        driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
-        driver.verify_connectivity()
+        with GraphDatabase.driver(URI, auth=(USER, PASSWORD)) as driver:
+            driver.verify_connectivity()
 
-        # Run the simplest possible query to confirm the database is responsive
-        with driver.session(database=DATABASE) as session:
-            result = session.run("RETURN 1 AS ok")
-            assert result.single()["ok"] == 1
+            # Run the simplest possible query to confirm the database is responsive
+            with driver.session(database=DATABASE) as session:
+                result = session.run("RETURN 1 AS ok")
+                assert result.single()["ok"] == 1
 
-        driver.close()
         print(f"Neo4j connection OK ({URI})")
 
     except KeyError as e:
