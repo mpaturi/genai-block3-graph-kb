@@ -40,7 +40,7 @@ to S3 in Block 2.
 
 Block 1 and 2 artifacts reused:
 - `data/raw/*.csv` source files: person.csv, condition_occurrence.csv,
-  drug_exposure.csv, visit_occurrence.csv
+  drug_exposure.csv, visit_occurrence.csv, measurement.csv
 - OMOP schema and domain knowledge from Block 1 validation logic
 
 Block 1 and 2 artifacts NOT reused:
@@ -95,7 +95,7 @@ All scripts load credentials via `python-dotenv`.
 
 | Label | Properties | Source |
 |---|---|---|
-| `Patient` | `person_id`, `year_of_birth`, `year_of_birth_band`, `gender`, `race`, `visit_count` | person.csv + visit_occurrence.csv |
+| `Patient` | `person_id`, `year_of_birth`, `year_of_birth_band`, `gender`, `race`, `visit_count`, `latest_sbp`, `latest_bmi`, `latest_glucose`, `latest_hba1c` | person.csv + visit_occurrence.csv + measurement.csv |
 | `Condition` | `condition_concept_id`, `condition_name` | condition_occurrence.csv |
 | `Drug` | `drug_concept_id`, `drug_name` | drug_exposure.csv |
 
@@ -132,7 +132,7 @@ Exact numbers confirmed from Block 1/2 source data:
 | PRESCRIBED relationships | 5,716 (distinct person_id, drug_concept_id, drug_exposure_start_date tuples) |
 | Export records (JSONL) | 11,436 (matches Patient node count) |
 
-> **Actual CSV row counts (confirmed Phase 3):** person.csv 11,770 · condition_occurrence.csv 5,037 · drug_exposure.csv 4,564 · visit_occurrence.csv 23,541
+> **Actual CSV row counts (confirmed Phase 6):** person.csv 11,784 · condition_occurrence.csv 14,264 · drug_exposure.csv 6,322 · visit_occurrence.csv 23,568 · measurement.csv 24,616
 
 ## Cypher queries
 
@@ -186,14 +186,18 @@ as JSON Lines (one record per patient). Example record:
 ```json
 {
   "id": "patient_123",
-  "text": "Patient 123, born in the 1970s, Male. Conditions: Type 2 diabetes mellitus, Essential hypertension. Drugs: Metformin, Lisinopril. Visits: 3.",
+  "text": "Patient 123, born in the 1970s, Male. Conditions: Type 2 diabetes mellitus, Essential hypertension. Drugs: Metformin, Lisinopril. Visits: 3. Latest labs: HbA1c 7.2%, Glucose 142 mg/dL, SBP 138 mmHg, BMI 28.4.",
   "metadata": {
     "person_id": 123,
     "year_of_birth_band": "1970s",
     "gender": "Male",
     "condition_count": 2,
     "drug_count": 2,
-    "visit_count": 3
+    "visit_count": 3,
+    "latest_sbp": 138,
+    "latest_bmi": 28.4,
+    "latest_glucose": 142,
+    "latest_hba1c": 7.2
   }
 }
 ```
@@ -215,6 +219,7 @@ in Pinecone.
 | 3 | `phase-3-load` | `scripts/load_graph.py`, `data/raw/*.csv` |
 | 4 | `phase-4-query-export` | `scripts/query_graph.py`, `scripts/export_graph.py` |
 | 5 | `phase-5-verify` | `scripts/run_all.py`, `scripts/verify.py`, `README.md` |
+| 6 | `phase-6-data-expansion` | `data/raw/measurement.csv`, updated `scripts/load_graph.py`, updated `scripts/export_graph.py`, updated `docs/` |
 
 ## Scope
 
@@ -226,7 +231,7 @@ Block 3 does not include:
 - Cloud-hosted Neo4j (AuraDB) — local Docker only
 - Additional embedding or vector operations — those belong to Block 4
 - Real-time data loading or streaming
-- Additional OMOP tables beyond person, condition_occurrence, drug_exposure, visit_occurrence
+- Additional OMOP tables beyond person, condition_occurrence, drug_exposure, visit_occurrence, measurement
 
 ## Functional requirements
 
@@ -241,7 +246,7 @@ Block 3 must:
 8. All scripts runnable from a single command (`python scripts/run_all.py`).
 9. Verification script (`scripts/verify.py`) must confirm:
    - Neo4j is reachable
-   - Patient node count matches person.csv row count after dropping rows with null year_of_birth (11,424)
+   - Patient node count matches person.csv row count after dropping rows with null year_of_birth (11,436)
    - Condition node count matches distinct condition_concept_id count in condition_occurrence.csv
    - Drug node count matches distinct drug_concept_id count in drug_exposure.csv
    - HAS_CONDITION relationship count matches distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv
