@@ -87,7 +87,7 @@
 **Key decisions:**
 - UNWIND batch MERGE with `BATCH_SIZE=500` for performance
 - Patients loaded first — nodes must exist before relationships
-- Only 3 distinct Condition nodes and 6 distinct Drug nodes — Block 1 uses a curated whitelist of SNOMED/RxNorm codes mapped to small synthetic integers
+- Only 11 distinct Condition nodes and 17 distinct Drug nodes — Block 1 uses a curated whitelist of SNOMED/RxNorm codes mapped to small synthetic integers
 - `condition_name` and `drug_name` resolved via hardcoded reverse-lookup dict in the loader (no `condition_source_value` column exists in the CSVs)
 - Condition nodes deduped on `condition_concept_id` before MERGE
 - Drug nodes deduped on `drug_concept_id` before MERGE

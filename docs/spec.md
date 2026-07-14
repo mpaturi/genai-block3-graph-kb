@@ -125,12 +125,12 @@ Exact numbers confirmed from Block 1/2 source data:
 
 | Metric | Expected |
 |---|---|
-| Patient nodes | 11,424 (person.csv 11,770 minus 176 null year_of_birth rows minus 170 duplicate person_id rows) |
-| Condition nodes | 3 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia) |
-| Drug nodes | 6 (Metformin, Humulin insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin) |
-| HAS_CONDITION relationships | 4,818 (distinct person_id, condition_concept_id, condition_start_date tuples) |
-| PRESCRIBED relationships | 4,323 (distinct person_id, drug_concept_id, drug_exposure_start_date tuples) |
-| Export records (JSONL) | 11,424 (matches Patient node count) |
+| Patient nodes | 11,436 (person.csv 11,784 minus null year_of_birth rows, deduped on person_id) |
+| Condition nodes | 11 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia, Anemia, Osteoporosis, Congestive heart failure, Atrial fibrillation, Streptococcal pharyngitis, Urinary tract infection, Pulmonary embolism, Osteoarthritis) |
+| Drug nodes | 17 (Metformin, Insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin, Epoetin Alfa, Alendronic acid, Furosemide, Carvedilol, Digoxin, Warfarin, Penicillin V, Ciprofloxacin, Nitrofurantoin, Enoxaparin, Naproxen) |
+| HAS_CONDITION relationships | 13,626 (distinct person_id, condition_concept_id, condition_start_date tuples) |
+| PRESCRIBED relationships | 5,716 (distinct person_id, drug_concept_id, drug_exposure_start_date tuples) |
+| Export records (JSONL) | 11,436 (matches Patient node count) |
 
 > **Actual CSV row counts (confirmed Phase 3):** person.csv 11,770 · condition_occurrence.csv 5,037 · drug_exposure.csv 4,564 · visit_occurrence.csv 23,541
 
