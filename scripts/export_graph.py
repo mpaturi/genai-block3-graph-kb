@@ -81,10 +81,10 @@ def main():
                     "condition_count": len(row["conditions"]),
                     "drug_count": len(row["drugs"]),
                     "visit_count": row["visit_count"],
-                    "latest_sbp": row["latest_sbp"],
-                    "latest_bmi": row["latest_bmi"],
-                    "latest_glucose": row["latest_glucose"],
-                    "latest_hba1c": row["latest_hba1c"],
+                    "latest_sbp":     int(row["latest_sbp"])     if row["latest_sbp"]     is not None else None,
+                    "latest_bmi":     row["latest_bmi"],
+                    "latest_glucose": int(row["latest_glucose"])  if row["latest_glucose"] is not None else None,
+                    "latest_hba1c":   row["latest_hba1c"],
                 },
             }
             f.write(orjson.dumps(doc) + b"\n")
