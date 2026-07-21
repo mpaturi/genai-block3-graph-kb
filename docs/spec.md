@@ -193,10 +193,11 @@ as JSON Lines (one record per patient). Example record:
     "gender": "Male",
     "condition_count": 2,
     "drug_count": 2,
+    "conditions": ["Type 2 diabetes mellitus", "Essential hypertension"],
     "visit_count": 3,
-    "latest_sbp": 138,
+    "latest_sbp": 138.0,
     "latest_bmi": 28.4,
-    "latest_glucose": 142,
+    "latest_glucose": 142.0,
     "latest_hba1c": 7.2
   }
 }
