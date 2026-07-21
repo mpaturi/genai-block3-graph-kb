@@ -74,6 +74,13 @@ def main():
         visits = visits[visits["person_id"].isin(valid_pids)]
         expected_visit_total = len(visits)
 
+        measurements = pd.read_csv(f"{DATA_DIR}/measurement.csv")
+        # Same sentinel filter as load_measurements(): drop null/non-positive values
+        measurements = measurements.dropna(subset=["value_as_number"])
+        measurements = measurements[measurements["value_as_number"] > 0]
+        measurements = measurements[measurements["person_id"].isin(valid_pids)]
+        expected_patients_with_labs = measurements["person_id"].nunique()
+
         # --- Neo4j counts ---
         with driver.session(database=DATABASE) as session:
             actual_patients   = session.run("MATCH (p:Patient)   RETURN count(p) AS n").single()["n"]
@@ -84,6 +91,16 @@ def main():
             # Sum of visit_count across all patients must equal total rows in visit_occurrence.csv
             actual_visit_total = session.run(
                 "MATCH (p:Patient) RETURN sum(p.visit_count) AS n"
+            ).single()["n"]
+            actual_patients_with_labs = session.run(
+                """
+                MATCH (p:Patient)
+                WHERE p.latest_sbp IS NOT NULL
+                   OR p.latest_bmi IS NOT NULL
+                   OR p.latest_glucose IS NOT NULL
+                   OR p.latest_hba1c IS NOT NULL
+                RETURN count(p) AS n
+                """
             ).single()["n"]
 
     finally:
@@ -104,6 +121,13 @@ def main():
         "sum(Patient.visit_count) == visit_occurrence.csv rows",
         actual_visit_total,
         expected_visit_total,
+    ))
+
+    print("\nLab properties:")
+    results.append(check(
+        "Patients with at least one lab value",
+        actual_patients_with_labs,
+        expected_patients_with_labs,
     ))
 
     # --- JSONL export ---
