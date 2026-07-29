@@ -4,7 +4,7 @@
 
 **Architecture:** Neo4j 5.18 Community runs in a Docker container. Python scripts use the official neo4j driver with `UNWIND`-based batch MERGE for idempotent loading. All scripts read credentials from `.env` via python-dotenv and are orchestrated by `scripts/run_all.py`.
 
-**Tech Stack:** Python 3.11, Neo4j 5.18-community (Docker), neo4j driver ≥5.14.0, pandas ≥2.1.0, python-dotenv ≥1.0.0, orjson ≥3.9.0, tqdm ≥4.66.0
+**Tech Stack:** Python 3.11, Neo4j 5.18-community (Docker), neo4j==6.2.0, pandas==3.0.3, pyarrow==24.0.0, python-dotenv==1.2.2, orjson==3.11.9, tqdm==4.68.3
 
 ## Global Constraints
 
@@ -51,10 +51,10 @@
 - Healthcheck polls `cypher-shell` every 10s, up to 10 retries
 - Docker Compose reads `.env` from project root automatically
 
-- [ ] Create `docker-compose.yml`, `.env.example`, `requirements.txt`; update `.gitignore`
-- [ ] `cp .env.example .env` and set password
-- [ ] `docker compose up -d` — wait for `running (healthy)`
-- [ ] Commit: `feat(setup): add Docker, env template, and Python deps`
+- [x] Create `docker-compose.yml`, `.env.example`, `requirements.txt`; update `.gitignore`
+- [x] `cp .env.example .env` and set password
+- [x] `docker compose up -d` — wait for `running (healthy)`
+- [x] Commit: `feat(setup): add Docker, env template, and Python deps`
 
 ---
 
@@ -70,9 +70,9 @@
 - Catches `ServiceUnavailable` and `AuthError` separately for clear error messages
 - Runs `RETURN 1 AS ok` as the simplest possible connectivity test
 
-- [ ] Create `scripts/check_connection.py`
-- [ ] Run — confirm `Neo4j connection OK (bolt://localhost:7687)`
-- [ ] Commit: `feat(setup): add Neo4j connection smoke test`
+- [x] Create `scripts/check_connection.py`
+- [x] Run — confirm `Neo4j connection OK (bolt://localhost:7687)`
+- [x] Commit: `feat(setup): add Neo4j connection smoke test`
 
 ---
 
@@ -95,12 +95,12 @@
 - HAS_CONDITION MERGE on `(person_id, condition_concept_id, condition_start_date)` — dedup-safe
 - PRESCRIBED MERGE on `(person_id, drug_concept_id, drug_exposure_start_date)` — dedup-safe
 
-- [ ] Copy OMOP CSVs into `data/raw/` from Block 1
-- [ ] Run `wc -l data/raw/*.csv` — update Expected Graph Statistics in `docs/spec.md`
-- [ ] Create `scripts/load_graph.py`
-- [ ] Run loader — confirm progress bars complete with `Graph load complete.`
-- [ ] Re-run — confirm identical counts (idempotency)
-- [ ] Commit: `feat(load): add graph loader and OMOP source CSVs`
+- [x] Copy OMOP CSVs into `data/raw/` from Block 1
+- [x] Run `wc -l data/raw/*.csv` — update Expected Graph Statistics in `docs/spec.md`
+- [x] Create `scripts/load_graph.py`
+- [x] Run loader — confirm progress bars complete with `Graph load complete.`
+- [x] Re-run — confirm identical counts (idempotency)
+- [x] Commit: `feat(load): add graph loader and OMOP source CSVs`
 
 ---
 
@@ -117,9 +117,9 @@
 - Results printed as pandas DataFrames for readable tabular output
 - Queries match spec exactly (see `docs/spec.md` Cypher queries section)
 
-- [ ] Create `scripts/query_graph.py`
-- [ ] Run — confirm 4 non-empty result tables printed
-- [ ] Commit: `feat(query): add 4 Cypher clinical queries`
+- [x] Create `scripts/query_graph.py`
+- [x] Run — confirm 4 non-empty result tables printed
+- [x] Commit: `feat(query): add 4 Cypher clinical queries`
 
 ---
 
@@ -138,11 +138,11 @@
 - `orjson` used for fast binary JSON serialisation
 - `data/export/` is git-ignored; `.gitkeep` commits the empty directory
 
-- [ ] Create `data/export/.gitkeep`
-- [ ] Create `scripts/export_graph.py`
-- [ ] Run — confirm `Exported ~11,424 records to data/export/graph_export.jsonl`
-- [ ] Spot-check first record: `id`, `text`, `metadata` keys present; `text` is readable
-- [ ] Commit: `feat(export): add JSONL patient subgraph exporter`
+- [x] Create `data/export/.gitkeep`
+- [x] Create `scripts/export_graph.py`
+- [x] Run — confirm `Exported ~11,424 records to data/export/graph_export.jsonl`
+- [x] Spot-check first record: `id`, `text`, `metadata` keys present; `text` is readable
+- [x] Commit: `feat(export): add JSONL patient subgraph exporter`
 
 ---
 
@@ -162,11 +162,11 @@
 - `visit_count` per patient verified against visit_occurrence.csv grouped counts
 - Exit code 1 on any failure — integrates with run_all.py failure detection
 
-- [ ] Create `scripts/run_all.py`
-- [ ] Create `scripts/verify.py`
-- [ ] Run `python scripts/verify.py` — all checks PASS
-- [ ] Run `python scripts/run_all.py` — `All steps completed successfully.`
-- [ ] Commit: `feat(verify): add orchestrator and verification script`
+- [x] Create `scripts/run_all.py`
+- [x] Create `scripts/verify.py`
+- [x] Run `python scripts/verify.py` — all checks PASS
+- [x] Run `python scripts/run_all.py` — `All steps completed successfully.`
+- [x] Commit: `feat(verify): add orchestrator and verification script`
 
 ---
 
@@ -178,5 +178,5 @@
 - Consumes: completed project
 - Produces: README with setup steps and schema diagram
 
-- [ ] Write `README.md` — setup instructions, scripts table, schema diagram reference
-- [ ] Commit: `docs: add README with schema diagram and setup instructions`
+- [x] Write `README.md` — setup instructions, scripts table, schema diagram reference
+- [x] Commit: `docs: add README with schema diagram and setup instructions`

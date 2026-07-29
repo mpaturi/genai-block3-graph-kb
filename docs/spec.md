@@ -76,12 +76,12 @@ Orchestration: scripts/run_all.py runs pre-flight + pipeline in sequence.
 |---|---|
 | Neo4j | 5.18 Community + APOC |
 | Python | 3.11 |
-| neo4j (driver) | ≥5.14.0 |
-| pandas | ≥2.1.0 |
-| pyarrow | ≥14.0.0 — pandas CSV backend; also enables Parquet output if needed in Phase 4+ |
-| python-dotenv | ≥1.0.0 |
-| orjson | ≥3.9.0 |
-| tqdm | ≥4.66.0 |
+| neo4j (driver) | 6.2.0 |
+| pandas | 3.0.3 |
+| pyarrow | 24.0.0 |
+| python-dotenv | 1.2.2 |
+| orjson | 3.11.9 |
+| tqdm | 4.68.3 |
 
 ## Credentials and configuration
 
@@ -125,7 +125,7 @@ Exact numbers confirmed from Block 1/2 source data:
 
 | Metric | Expected |
 |---|---|
-| Patient nodes | 11,424 (person.csv 11,770 minus 346 null year_of_birth rows) |
+| Patient nodes | 11,424 (person.csv 11,770 minus 176 null year_of_birth rows minus 170 duplicate person_id rows) |
 | Condition nodes | 3 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia) |
 | Drug nodes | 6 (Metformin, Humulin insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin) |
 | HAS_CONDITION relationships | 4,818 (distinct person_id, condition_concept_id, condition_start_date tuples) |
@@ -139,7 +139,7 @@ Exact numbers confirmed from Block 1/2 source data:
 **Q1 — Top 10 most common conditions**
 ```cypher
 MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition)
-RETURN c.condition_name AS condition, count(p) AS patient_count
+RETURN c.condition_name AS condition, count(DISTINCT p) AS patient_count
 ORDER BY patient_count DESC
 LIMIT 10
 ```
@@ -150,7 +150,7 @@ MATCH (p:Patient)-[:HAS_CONDITION]->(c:Condition),
       (p)-[:PRESCRIBED]->(d:Drug)
 RETURN c.condition_name AS condition,
        d.drug_name AS drug,
-       count(p) AS patient_count
+       count(DISTINCT p) AS patient_count
 ORDER BY patient_count DESC
 LIMIT 20
 ```

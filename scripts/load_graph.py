@@ -97,8 +97,8 @@ def load_patients(session):
             "person_id": int(r["person_id"]),
             "year_of_birth": int(r["year_of_birth"]),
             "year_of_birth_band": birth_band(r["year_of_birth"]),
-            "gender": GENDER_NAMES.get(int(r.get("gender_concept_id") or 0), "unknown"),
-            "race": RACE_NAMES.get(int(r.get("race_concept_id") or 0), "unknown"),
+            "gender": GENDER_NAMES.get(int(r.get("gender_concept_id")) if pd.notna(r.get("gender_concept_id")) else 0, "unknown"),
+            "race": RACE_NAMES.get(int(r.get("race_concept_id")) if pd.notna(r.get("race_concept_id")) else 0, "unknown"),
             "visit_count": int(r["visit_count"]),
         }
         for r in df.to_dict("records")
@@ -122,7 +122,11 @@ def load_patients(session):
 def load_conditions(session):
     """Load Condition nodes (3 distinct) and HAS_CONDITION relationships."""
     df = pd.read_csv(f"{DATA_DIR}/condition_occurrence.csv")
+    before = len(df)
     df = df.dropna(subset=["condition_concept_id", "person_id", "condition_start_date"])
+    dropped = before - len(df)
+    if dropped:
+        print(f"  Skipped {dropped} condition rows with null required fields")
 
     # One Condition node per distinct concept_id — look up name from hardcoded dict
     distinct_ids = df["condition_concept_id"].unique().tolist()
@@ -170,7 +174,11 @@ def load_conditions(session):
 def load_drugs(session):
     """Load Drug nodes (6 distinct) and PRESCRIBED relationships."""
     df = pd.read_csv(f"{DATA_DIR}/drug_exposure.csv")
+    before = len(df)
     df = df.dropna(subset=["drug_concept_id", "person_id", "drug_exposure_start_date"])
+    dropped = before - len(df)
+    if dropped:
+        print(f"  Skipped {dropped} drug rows with null required fields")
 
     # One Drug node per distinct concept_id
     distinct_ids = df["drug_concept_id"].unique().tolist()
@@ -215,13 +223,12 @@ def load_drugs(session):
 
 
 def main():
-    driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
-    with driver.session(database=DATABASE) as session:
-        create_constraints(session)
-        load_patients(session)   # must run before relationships
-        load_conditions(session)
-        load_drugs(session)
-    driver.close()
+    with GraphDatabase.driver(URI, auth=(USER, PASSWORD)) as driver:
+        with driver.session(database=DATABASE) as session:
+            create_constraints(session)
+            load_patients(session)
+            load_conditions(session)
+            load_drugs(session)
     print("Graph load complete.")
 
 
