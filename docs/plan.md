@@ -87,17 +87,16 @@
 **Key decisions:**
 - UNWIND batch MERGE with `BATCH_SIZE=500` for performance
 - Patients loaded first — nodes must exist before relationships
+- Only 3 distinct Condition nodes and 6 distinct Drug nodes — Block 1 uses a curated whitelist of SNOMED/RxNorm codes mapped to small synthetic integers
+- `condition_name` and `drug_name` resolved via hardcoded reverse-lookup dict in the loader (no `condition_source_value` column exists in the CSVs)
 - Condition nodes deduped on `condition_concept_id` before MERGE
 - Drug nodes deduped on `drug_concept_id` before MERGE
-- `condition_name` from `condition_source_value`; falls back to `condition_concept_id` if empty
-- `drug_name` from `drug_source_value`; falls back to `drug_concept_id` if empty
 - `visit_count` computed as visit_occurrence.csv row count per `person_id`, stored on Patient
 - HAS_CONDITION MERGE on `(person_id, condition_concept_id, condition_start_date)` — dedup-safe
 - PRESCRIBED MERGE on `(person_id, drug_concept_id, drug_exposure_start_date)` — dedup-safe
 
 - [ ] Copy OMOP CSVs into `data/raw/` from Block 1
 - [ ] Run `wc -l data/raw/*.csv` — update Expected Graph Statistics in `docs/spec.md`
-- [ ] Verify `condition_source_value` / `drug_source_value` are populated
 - [ ] Create `scripts/load_graph.py`
 - [ ] Run loader — confirm progress bars complete with `Graph load complete.`
 - [ ] Re-run — confirm identical counts (idempotency)
@@ -141,7 +140,7 @@
 
 - [ ] Create `data/export/.gitkeep`
 - [ ] Create `scripts/export_graph.py`
-- [ ] Run — confirm `Exported ~1000 records to data/export/graph_export.jsonl`
+- [ ] Run — confirm `Exported ~11,424 records to data/export/graph_export.jsonl`
 - [ ] Spot-check first record: `id`, `text`, `metadata` keys present; `text` is readable
 - [ ] Commit: `feat(export): add JSONL patient subgraph exporter`
 

@@ -22,13 +22,12 @@
 
 ## Phase 3 — Load (`phase-3-load`)
 
-- [ ] Copy OMOP CSVs into `data/raw/` (person, condition_occurrence, drug_exposure, visit_occurrence)
-- [ ] Record actual row counts; update Expected Graph Statistics in `docs/spec.md`
-- [ ] Verify `condition_source_value` / `drug_source_value` are populated
-- [ ] Create `scripts/load_graph.py`
-- [ ] Run loader — confirm progress bars complete
-- [ ] Re-run loader — confirm idempotency (same counts)
-- [ ] Commit `scripts/load_graph.py` and `data/raw/*.csv` to branch `phase-3-load`
+- [x] Copy OMOP CSVs into `data/raw/` (person, condition_occurrence, drug_exposure, visit_occurrence)
+- [x] Record actual row counts; update Expected Graph Statistics in `docs/spec.md`
+- [x] Create `scripts/load_graph.py`
+- [x] Run loader — confirm progress bars complete
+- [x] Re-run loader — confirm idempotency (same counts)
+- [x] Commit `scripts/load_graph.py` and `data/raw/*.csv` to branch `phase-3-load`
 
 ## Phase 4 — Query + Export (`phase-4-query-export`)
 
@@ -36,7 +35,7 @@
 - [ ] Run queries — confirm 4 result tables with non-empty rows
 - [ ] Create `data/export/.gitkeep`
 - [ ] Create `scripts/export_graph.py`
-- [ ] Run exporter — confirm ~1,000 records in `data/export/graph_export.jsonl`
+- [ ] Run exporter — confirm ~11,424 records in `data/export/graph_export.jsonl`
 - [ ] Spot-check JSONL output (valid JSON, readable `text` field)
 - [ ] Commit `scripts/query_graph.py`, `scripts/export_graph.py`, `data/export/.gitkeep`
 

@@ -206,6 +206,7 @@ tempCodeRunnerFile.py
 # Project-specific
 data/export/*.jsonl
 .claude/
+claude.md
 
 # Ruff stuff:
 .ruff_cache/

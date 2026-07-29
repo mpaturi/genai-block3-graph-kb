@@ -99,13 +99,10 @@ All scripts load credentials via `python-dotenv`.
 | `Condition` | `condition_concept_id`, `condition_name` | condition_occurrence.csv |
 | `Drug` | `drug_concept_id`, `drug_name` | drug_exposure.csv |
 
-> **Note on concept names:** Synthea-generated OMOP CSVs include
-> `condition_source_value` (human-readable condition name) in
-> condition_occurrence.csv and `drug_source_value` (drug name) in
-> drug_exposure.csv. These are used as `condition_name` and `drug_name`
-> on nodes. If these fields are empty in the actual CSVs, fall back to
-> `condition_concept_id` and `drug_concept_id` as the display value.
-> Verify before Phase 3 begins.
+> **Note on concept names:** These CSVs do not include `condition_source_value` or
+> `drug_source_value` columns. Condition and drug names are mapped from
+> `condition_concept_id` and `drug_concept_id` using a hardcoded dictionary
+> sourced from Block 1's `src/concepts.py`.
 
 ### Relationships
 
@@ -128,15 +125,14 @@ Exact numbers confirmed from Block 1/2 source data:
 
 | Metric | Expected |
 |---|---|
-| Patient nodes | ~1,000 (matches person.csv row count) |
-| Condition nodes | ~400 distinct conditions |
-| Drug nodes | ~300 distinct drugs |
-| HAS_CONDITION relationships | distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv |
-| PRESCRIBED relationships | distinct (person_id, drug_concept_id, drug_exposure_start_date) tuples in drug_exposure.csv |
-| Export records (JSONL) | matches Patient node count |
+| Patient nodes | 11,424 (person.csv 11,770 minus 346 null year_of_birth rows) |
+| Condition nodes | 3 (Diabetes mellitus type 2, Essential hypertension, Hyperlipidemia) |
+| Drug nodes | 6 (Metformin, Humulin insulin, Lisinopril, Amlodipine, Hydrochlorothiazide, Simvastatin) |
+| HAS_CONDITION relationships | 4,818 (distinct person_id, condition_concept_id, condition_start_date tuples) |
+| PRESCRIBED relationships | 4,323 (distinct person_id, drug_concept_id, drug_exposure_start_date tuples) |
+| Export records (JSONL) | 11,424 (matches Patient node count) |
 
-> **Note:** Exact counts must be confirmed by running `wc -l` on each CSV before
-> Phase 3. Update this table with actual numbers at that time.
+> **Actual CSV row counts (confirmed Phase 3):** person.csv 11,770 · condition_occurrence.csv 5,037 · drug_exposure.csv 4,564 · visit_occurrence.csv 23,541
 
 ## Cypher queries
 
@@ -190,11 +186,11 @@ as JSON Lines (one record per patient). Example record:
 ```json
 {
   "id": "patient_123",
-  "text": "Patient 123, born in the 1970s, male. Conditions: Type 2 diabetes mellitus, Essential hypertension. Drugs: Metformin, Lisinopril. Visits: 3.",
+  "text": "Patient 123, born in the 1970s, Male. Conditions: Type 2 diabetes mellitus, Essential hypertension. Drugs: Metformin, Lisinopril. Visits: 3.",
   "metadata": {
     "person_id": 123,
     "year_of_birth_band": "1970s",
-    "gender": "M",
+    "gender": "Male",
     "condition_count": 2,
     "drug_count": 2,
     "visit_count": 3
@@ -245,7 +241,7 @@ Block 3 must:
 8. All scripts runnable from a single command (`python scripts/run_all.py`).
 9. Verification script (`scripts/verify.py`) must confirm:
    - Neo4j is reachable
-   - Patient node count matches person.csv row count
+   - Patient node count matches person.csv row count after dropping rows with null year_of_birth (11,424)
    - Condition node count matches distinct condition_concept_id count in condition_occurrence.csv
    - Drug node count matches distinct drug_concept_id count in drug_exposure.csv
    - HAS_CONDITION relationship count matches distinct (person_id, condition_concept_id, condition_start_date) tuples in condition_occurrence.csv
