@@ -16,7 +16,7 @@ subgraphs as JSONL for Block 4 RAG ingestion (Pinecone).
 
 | Node | Key properties |
 |---|---|
-| `Patient` | `person_id`, `year_of_birth_band`, `gender`, `race`, `visit_count` |
+| `Patient` | `person_id`, `year_of_birth_band`, `gender`, `race`, `visit_count`, `latest_sbp`, `latest_bmi`, `latest_glucose`, `latest_hba1c` |
 | `Condition` | `condition_concept_id`, `condition_name` |
 | `Drug` | `drug_concept_id`, `drug_name` |
 
@@ -24,6 +24,10 @@ subgraphs as JSONL for Block 4 RAG ingestion (Pinecone).
 |---|---|
 | `(Patient)-[:HAS_CONDITION]->(Condition)` | `condition_start_date` |
 | `(Patient)-[:PRESCRIBED]->(Drug)` | `drug_exposure_start_date` |
+
+`data/raw/measurement.csv` (24,616 rows) is loaded to set latest lab values
+(SBP, BMI, Glucose, HbA1c) as properties directly on the Patient node — there
+is no separate Measurement node or relationship.
 
 ## Setup
 
@@ -76,16 +80,16 @@ python scripts/verify.py             # confirm all node/rel counts pass
 
 | Metric | Count |
 |---|---|
-| Patient nodes | 11,424 |
-| Condition nodes | 3 |
-| Drug nodes | 6 |
-| HAS_CONDITION relationships | 4,818 |
-| PRESCRIBED relationships | 4,323 |
-| Export records (JSONL) | 11,424 |
+| Patient nodes | 11,436 |
+| Condition nodes | 11 |
+| Drug nodes | 17 |
+| HAS_CONDITION relationships | 13,626 |
+| PRESCRIBED relationships | 5,716 |
+| Export records (JSONL) | 11,436 |
 
 ## AI-assisted workflow
 
 This project was built using Claude Code (claude-sonnet-4-6) as a coding assistant.
-The workflow followed a spec → plan → tasks → code sequence across 5 phases,
+The workflow followed a spec → plan → tasks → code sequence across 6 phases,
 with Claude generating scripts and docs, and the developer reviewing, running,
 and validating each step before committing.

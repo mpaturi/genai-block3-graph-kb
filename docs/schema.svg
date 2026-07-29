@@ -20,10 +20,11 @@
 
   <!-- Patient node (left-center) -->
   <g transform="translate(185, 175)">
-    <rect x="-75" y="-38" width="150" height="76" rx="32" fill="#1f6feb" opacity="0.15" stroke="#1f6feb" stroke-width="2"/>
-    <text x="0" y="-16" text-anchor="middle" font-size="11" font-weight="700" fill="#58a6ff">Patient</text>
-    <text x="0" y="0" text-anchor="middle" font-size="9.5" fill="#8b949e">person_id · visit_count</text>
-    <text x="0" y="14" text-anchor="middle" font-size="9.5" fill="#8b949e">year_of_birth_band · gender · race</text>
+    <rect x="-75" y="-46" width="150" height="92" rx="34" fill="#1f6feb" opacity="0.15" stroke="#1f6feb" stroke-width="2"/>
+    <text x="0" y="-26" text-anchor="middle" font-size="11" font-weight="700" fill="#58a6ff">Patient</text>
+    <text x="0" y="-8" text-anchor="middle" font-size="9.5" fill="#8b949e">person_id · visit_count</text>
+    <text x="0" y="8" text-anchor="middle" font-size="9.5" fill="#8b949e">year_of_birth_band · gender · race</text>
+    <text x="0" y="24" text-anchor="middle" font-size="7.5" fill="#8b949e">latest_sbp · latest_bmi · latest_glucose · latest_hba1c</text>
   </g>
 
   <!-- Condition node (top right) -->

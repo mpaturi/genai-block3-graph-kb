@@ -48,3 +48,20 @@
 - [x] Write `README.md` (setup steps + schema diagram)
 - [x] Commit `scripts/run_all.py`, `scripts/verify.py`, `README.md`
 - [x] Push `phase-5-verify` to GitHub — PR2 ready for mentor review
+
+## Phase 6 — Data Expansion (`phase-6-data-expansion`)
+
+- [x] Expand CONDITION_NAMES in `scripts/load_graph.py` from 3 to 11 conditions
+- [x] Expand DRUG_NAMES in `scripts/load_graph.py` from 6 to 17 drugs
+- [x] Add `data/raw/measurement.csv` (24,616 rows; 4 concept IDs: SBP, BMI, Glucose, HbA1c)
+- [x] Add `load_measurements()` to `scripts/load_graph.py` — sets `latest_sbp`, `latest_bmi`, `latest_glucose`, `latest_hba1c` as Patient properties
+- [x] Filter sentinel -1.0 values (`value_as_number > 0`) before sort/dedup
+- [x] Use `MATCH` (not `MERGE`) so measurement rows for unloaded patients are skipped
+- [x] Update `scripts/export_graph.py` EXPORT_QUERY to fetch 4 lab fields
+- [x] Update `build_text()` to include "Latest labs:" sentence
+- [x] Update `metadata` dict in export to include 4 lab fields
+- [x] Run `python scripts/verify.py` — all 7 checks pass, 11,436 records confirmed
+- [x] Update `docs/spec.md` and `docs/tasks.md` for Phase 6
+- [x] Update `README.md` for Phase 6
+- [x] Commit: `feat(phase6): expand to 11 conditions/17 drugs, add measurement data as Patient properties, update JSONL export with lab values`
+- [x] Push `phase-6-data-expansion` and open PR
