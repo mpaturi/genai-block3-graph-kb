@@ -10,15 +10,15 @@
 
 ## Phase 2 — Setup (`phase-2-setup`)
 
-- [ ] Create `docker-compose.yml` (Neo4j 5.18 + APOC, credentials from `.env`)
-- [ ] Create `.env.example`
-- [ ] Create `requirements.txt`
-- [ ] Update `.gitignore` (add `.env`, `data/export/*.jsonl`)
-- [ ] Install Python dependencies (`pip install -r requirements.txt`)
-- [ ] Start Neo4j and confirm healthy (`docker compose up -d`)
-- [ ] Create `scripts/check_connection.py`
-- [ ] Run connection smoke test — confirm `Neo4j connection OK`
-- [ ] Commit Phase 2 files to branch `phase-2-setup`
+- [x] Create `docker-compose.yml` (Neo4j 5.18 + APOC, credentials from `.env`)
+- [x] Create `.env.example`
+- [x] Create `requirements.txt`
+- [x] Update `.gitignore` (add `.env`, `data/export/*.jsonl`)
+- [x] Install Python dependencies (`pip install -r requirements.txt`)
+- [x] Start Neo4j and confirm healthy (`docker compose up -d`)
+- [x] Create `scripts/check_connection.py`
+- [x] Run connection smoke test — confirm `Neo4j connection OK`
+- [x] Commit Phase 2 files to branch `phase-2-setup`
 
 ## Phase 3 — Load (`phase-3-load`)
 

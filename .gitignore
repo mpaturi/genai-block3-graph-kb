@@ -203,6 +203,10 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Project-specific
+data/export/*.jsonl
+.claude/
+
 # Ruff stuff:
 .ruff_cache/
 
